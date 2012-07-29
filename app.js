@@ -16,7 +16,7 @@ watch graphical mongodb implementation video
 6. create mongodb
 
  */
-
+ 
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
@@ -45,7 +45,7 @@ app.configure('development', function(){
 
 
 app.param('user', function(req, res, next, id){
-  if (req.user = 33) {
+  if (req.user = 3333) {
     next();
   } else {
     next(new Error('failed to find user'));

@@ -45,7 +45,7 @@ app.configure('development', function(){
 
 
 app.param('user', function(req, res, next, id){
-  if (req.user = 3333) {
+  if (req.user = 3355533) {
     next();
   } else {
     next(new Error('failed to find user'));

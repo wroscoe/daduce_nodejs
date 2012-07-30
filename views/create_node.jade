@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  p Create a Node
+
+  form(method='post')
+    p 
+      | Label
+      input(name='label') Label
+    p 
+      | Description
+      input(name='description')
+    p 
+      | Node Image URL
+      input(name='image_url')
+    p 
+      input(type='submit')
+    

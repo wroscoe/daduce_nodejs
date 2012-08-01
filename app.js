@@ -43,13 +43,15 @@ mongoose.connection.on('error', function (err) {
 });
 
 //NODES
-app.get('/allnodes', routes.getAllNodes);
-app.get('/node/:id', routes.getNode);
+app.get('/node/:id?', routes.getNode);
 app.get('/create_node', routes.createNode);
 app.post('/create_node', routes.newNode);
 
 //EDGES
-app.get('/get_edges/:node_id', routes.getEdge);
+app.get('/edges/id?', routes.getEdge);
+app.get('/create_edge', routes.createEdge);
+app.post('/create_edge', routes.newEdge);
+
 app.get('/', routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){

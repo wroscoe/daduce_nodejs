@@ -10,42 +10,77 @@ exports.index = function(req, res){
 
 //NODES
 exports.createNode = function(req, res){
-  //res.send("HELLO")
-  res.render('create_node', { title: 'Express', var2:'34'});
+  //TODO make this an edit function if the node is specified
+  res.render('create_node', {title:'Create Node'})
 };
 
 exports.newNode = function(req, res){
-  node = new Node({label:req.params.label, description:req.params.description});
-  node.save
-  res.send('node created!' + node._id);
+	//res.send(req.body)
+  node = new Node({
+  		'label':req.body.label, 
+  		'description':req.body.description,
+  		'image_url':req.body.image_url
+  	});
+  node.save()
+
+  res.send({msg:'Node Created!', node: node})
 };
 
 exports.getNode = function(req, res){
-  res.send("this is the getNode Page AND YOUR NODE ID" + req.params.id)
-  res.render('create_node', { title: 'Express', var2:'34'});
+	if (typeof(req.params.id) != 'undefined') 
+		{	// FIND one node @ ./node/id
+			Node.find({_id:req.params.id}, function(err, node) {
+				console.log('nodeid' + req.params.id)
+				res.send({msg:'Node Found', node:node});
+			});
+		}
+	else
+		{	//FIND ALL NODES @ ./node
+			  	Node.find({}, function(err, node) {
+					console.log('nodeid' + req.params.id)
+					res.send({msg:'Node Found', node:node});
+			});
+		}
 };
 
 
-//EDGES
+//  EDGES ---------------------------------------------
+
+//TODO Create ability to create, edit and view edges. And connect nodes.
 
 exports.createEdge = function(req, res){
-  //res.send("HELLO")
-	var node = new Node ({label:req.params.label, description:req.params.description});
-	node.save();
-  	res.send('Your Node was saved' + node._id);
+  //TODO make this an edit function if the node is specified
+  res.render('create_edge', {title:'Create Edge'})
 };
 
+exports.newEdge = function(req, res){
+	//res.send(req.body)
+  node = new Edge({
+  		'label':req.body.label, 
+  		'type': req.body.type,
+  		'description':req.body.description,
+  		'target_node_id':req.body.target_node_id, 
+  		'source_node_id':req.body.source_node_id
+  	});
+  node.save()
+
+  res.send({msg:'Edge Created!', edge: edge})
+};
 
 exports.getEdge = function(req, res){
-  //res.send("this is the getEdge Page AND YOUR NODE ID" + req.params.node_id)
-  //res.render('create_node', { title: 'Express', var2:'34'});
+	if (typeof(req.params.id) != 'undefined') 
+		{	// FIND one edge @ ./edge/id
+			Edge.find({_id:req.params.id}, function(err, edge) {
+				console.log('edgeid' + req.params.id)
+				res.send({msg:'Edge Found', edge:edge});
+			});
+		}
+	else
+		{	//FIND ALL NODES @ ./edge
+		  	Edge.find({}, function(err, edge) {
+				console.log('edgeid' + req.params.id)
+				res.send({msg:'Edge Found', edge:edge});
+			});
+		}
 };
 
-
-exports.getAllNodes = function(req, res){
-	Node.find({}, function(err, doc) {
-		console.log('looking for nodes')
-		res.send([{node: doc}]);
-	});
-
-};

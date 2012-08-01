@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1= title
+  p Create a Node
+
+  form(method='post')
+    p 
+      | Label
+      input(name='label') Label
+    p 
+      | Type
+      input(name='type')  
+    p 
+      | Description
+      input(name='description')
+    p 
+      | Target Node ID
+      input(name='target_node_id')
+    p 
+      | Source Node ID
+      input(name='source_node_id')
+    p 
+      input(type='submit')
+    

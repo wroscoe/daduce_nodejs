@@ -64,23 +64,29 @@ exports.newEdge = function(req, res){
   	});
   edge.save()
 
-  res.send({msg:'Edge Created!', edge: edge})
+	res.send({msg:'Edge Created', edge:edge});
 };
 
 exports.getEdge = function(req, res){
+	
+	var query = Edge.find({});
+	console.log('req.param = ' + req.param )
+	
 	if (typeof(req.params.id) != 'undefined') 
 		{	// FIND one Edge @ ./edge/id
-			Edge.find({_id:req.params.id}, function(err, edge) {
-				console.log('edgeid' + req.params.id)
-				res.send({msg:'Edge Found', edge:edge});
-			});
+			query.where('_id',req.params.id);
+			console.log('edgeid' + req.params.id)
 		}
-	else
-		{	//FIND ALL Edge @ ./edge
-		  	Edge.find({}, function(err, edge) {
-				console.log('edgeid' + req.params.id)
-				res.send({msg:'Edge Found', edge:edge});
-			});
+	if (typeof(req.param('node_id')) != 'undefined') 
+		{	// FIND edges matching node id @ ./edge?node_id=#
+			query.or([{'source_node_id':req.param('node_id')},{'target_node_id':req.param('node_id')}]);
 		}
+		
+	query.exec(function (err, edge) {
+		console.log('edgeid' + req.params.id)
+		res.send({msg:'Edge Found', edge:edge});
+	});
+
 };
+
 

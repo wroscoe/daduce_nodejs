@@ -48,7 +48,7 @@ app.get('/create_node', routes.createNode);
 app.post('/create_node', routes.newNode);
 
 //EDGES
-app.get('/edges/id?', routes.getEdge);
+app.get('/edge/:id?', routes.getEdge);
 app.get('/create_edge', routes.createEdge);
 app.post('/create_edge', routes.newEdge);
 

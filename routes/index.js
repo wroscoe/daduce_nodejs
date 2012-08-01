@@ -55,28 +55,28 @@ exports.createEdge = function(req, res){
 
 exports.newEdge = function(req, res){
 	//res.send(req.body)
-  node = new Edge({
+  edge = new Edge({
   		'label':req.body.label, 
   		'type': req.body.type,
   		'description':req.body.description,
   		'target_node_id':req.body.target_node_id, 
   		'source_node_id':req.body.source_node_id
   	});
-  node.save()
+  edge.save()
 
   res.send({msg:'Edge Created!', edge: edge})
 };
 
 exports.getEdge = function(req, res){
 	if (typeof(req.params.id) != 'undefined') 
-		{	// FIND one edge @ ./edge/id
+		{	// FIND one Edge @ ./edge/id
 			Edge.find({_id:req.params.id}, function(err, edge) {
 				console.log('edgeid' + req.params.id)
 				res.send({msg:'Edge Found', edge:edge});
 			});
 		}
 	else
-		{	//FIND ALL NODES @ ./edge
+		{	//FIND ALL Edge @ ./edge
 		  	Edge.find({}, function(err, edge) {
 				console.log('edgeid' + req.params.id)
 				res.send({msg:'Edge Found', edge:edge});

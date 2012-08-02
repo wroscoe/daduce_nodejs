@@ -46,6 +46,7 @@ mongoose.connection.on('error', function (err) {
 app.get('/node/:id?', routes.getNode);
 app.get('/create_node', routes.createNode);
 app.post('/create_node', routes.newNode);
+app.get('/search_node', routes.searchNode);
 
 //EDGES
 app.get('/edge/:id?', routes.getEdge);

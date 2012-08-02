@@ -43,6 +43,22 @@ exports.getNode = function(req, res){
 		}
 };
 
+exports.searchNode = function(req, res){
+	
+	console.log('searchNode req.param = ' + req.param )
+	
+	if (typeof(req.param('keyword')) != 'undefined') 
+		{	// FIND edges matching node id @ ./edge?node_id=#
+			
+			var patt=new RegExp(req.param('keyword'), "i");
+ 			Node.find({'label': patt}, function(err, node) {
+ 				res.send({msg:'Node Found', node:node})
+ 			});
+ 			
+		}
+
+};
+
 
 //  EDGES ---------------------------------------------
 

@@ -4,6 +4,7 @@ block content
   h1= title
   p Create a Node
 
+
   form(method='post')
     p 
       | Label
@@ -12,14 +13,20 @@ block content
       | Type
       input(name='type')  
     p 
-      | Description
-      input(name='description')
+      | Weight
+      input(name='weight')
     p 
       | Target Node ID
       input(name='target_node_id')
     p 
       | Source Node ID
       input(name='source_node_id')
+    p 
+      | Target Label
+      input(name='target_label')
+    p 
+      | Source Label
+      input(name='source_label')
     p 
       input(type='submit')
     

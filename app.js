@@ -12,7 +12,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , models = require('./models/node');
 
-mongoose.connect('mongodb://localhost/mydb')
+mongoose.connect('mongodb://localhost/mydb6')
 
 var app = express();
 
@@ -47,6 +47,7 @@ app.get('/node/:id?', routes.getNode);
 app.get('/create_node', routes.createNode);
 app.post('/create_node', routes.newNode);
 app.get('/search_node', routes.searchNode);
+app.get('/connected_nodes/:id', routes.getConnectedNodes);
 
 //EDGES
 app.get('/edge/:id?', routes.getEdge);

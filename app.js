@@ -9,10 +9,9 @@ var express = require('express')
   , path = require('path')
   , format = require('util').format
   , json_functions = require('./json_functions')
-  , mongoose = require('mongoose')
-  , models = require('./models/node');
+  , mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mydb6')
+mongoose.connect('mongodb://localhost/mydb16')
 
 var app = express();
 
@@ -47,7 +46,7 @@ app.get('/node/:id?', routes.getNode);
 app.get('/create_node', routes.createNode);
 app.post('/create_node', routes.newNode);
 app.get('/search_node', routes.searchNode);
-app.get('/connected_nodes/:id', routes.getConnectedNodes);
+app.get('/connected_nodes/:id?', routes.getConnectedNodes);
 
 //EDGES
 app.get('/edge/:id?', routes.getEdge);

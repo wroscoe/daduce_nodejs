@@ -3,12 +3,17 @@ extends layout
 block content
   h1= title
   p Create a Node
+  
+  script(type='text/javascript')   
+    $('#filter').blur(function() {
+    $('#options').hide();
+    });
 
 
   form(method='post')
     p 
       | Label
-      input(name='label') Label
+      input(name='label', id='label') Label
     p 
       | Type
       input(name='type')  
@@ -17,7 +22,7 @@ block content
       input(name='weight')
     p 
       | Target Node ID
-      input(name='target_node_id')
+      input(name='target_node_id', id='target_node_id')
     p 
       | Source Node ID
       input(name='source_node_id')
@@ -29,4 +34,12 @@ block content
       input(name='source_label')
     p 
       input(type='submit')
+    
+  script(type='text/javascript')   
+    $('#target_node_id').blur(function() {
+
+    $.getJSON('http://localhost:3000/node/50245ba5fc60b6c20a000002', function(data) {
+    $("#label").val(data.node[0].label);
+    });
+    });    
     

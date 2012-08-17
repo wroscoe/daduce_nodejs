@@ -1,6 +1,9 @@
 extends layout
 
+
+
 block content
+  script(type='text/javascript', src='/javascripts/search.js')   
   h1= title
   p Leading Inovation
 
@@ -13,7 +16,10 @@ block content
       a(href="/nodes") See some Nodes
       
 
+  div.search
+    Search Nodes: 
+    input(name='search', id='search_input')
+    button(id='search_button') A button element
 
-  label.test
-    p #{var2}
-    input(name='user[name]')
+  
+  div.graph

@@ -14,13 +14,13 @@ var edgeSchema = new Schema({
 });
 
 
-// A group of all the connected edges for a specific node
-var edgeGroupSchema = new Schema({
-    node_id:  String,
-    type: String,
-    edges: [edgeSchema],
-    created: {type: Date, default: Date.now}
+var nodeSchema = new Schema({
+    label:  String,
+    description: String,
+    image_url: String,
+    created: {type: Date, default: Date.now},
+    author: {type: String, default: 'Anon'}
 });
-
-exports.EdgeGroup = mongoose.model('EdgeGroup', edgeGroupSchema);
+ 
+exports.Node = mongoose.model('Node', nodeSchema);
 exports.Edge = mongoose.model('Edge', edgeSchema);

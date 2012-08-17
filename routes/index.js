@@ -4,10 +4,10 @@
 //node 3: 5021b62b53a727ae17000004
 
 
-var Node = require ('../models/node')
-var EdgeModule = require ('../models/edge')
-var EdgeGroup = EdgeModule.EdgeGroup
-var Edge = EdgeModule.Edge
+
+var ModelModule = require ('../models/edge_node')
+var Node = ModelModule.Node
+var Edge = ModelModule.Edge
 
 
 //INDEX
@@ -63,14 +63,16 @@ exports.searchNode = function(req, res){
  			});
 		}
 };
-
+ 
 
 //Return all edge groups containing all edges for one node. 
 exports.getConnectedNodes = function(req, res){
-	
-	console.log('req.params.id' + req.params.id);
-	EdgeGroup.find({'node_id':req.params.id}, function (err, edgeGroup){
-		res.send({msg:'Edge Group Found', edgeGroup: edgeGroup})
+	console.log('getConnectedNodes...')
+	console.log('req.params.id  ' + req.params.id);
+	Edge.find({'source_node_id':req.params.id}, function (err, e){
+	//Edge.find({}, function (err, e){
+		console.log(e)
+		res.send({msg:'Edges found.', e: e})
 	});
 	
 };
@@ -89,59 +91,23 @@ exports.newEdge = function(req, res){
 	//Find edge or create one. 
 	Edge.findOne({'source_node_id':req.body.source_node_id, 'target_node_id':req.body.target_node_id, 'type':req.body.type},function(err,edge){
 		if (edge == null){
-			edge = new Edge({
+			forward_edge = new Edge({
 				'source_node_id':req.body.source_node_id,
 				'target_node_id':req.body.target_node_id,
 				'type': req.body.type,
 				'target_label': req.body.target_label, //the target node Label
 				'source_label': req.body.source_label,
-				'weight': 1
+				'weight': 1,
+				'dir':1
 			})
-			edge.save();
-			console.log("New Edge Created: " + edge);
+			forward_edge.save();
+			console.log("Forward Edge Created: " + forward_edge);
 		}
 		else{
 			res.send({msg:'Edge already exists'})
 		}
-		
-		//Add edge to source node edge group
-		EdgeGroup.findOne({'node_id':req.body.source_node_id, 'type':req.body.type}, function(err,sourceEdgeGroup){
-			if (sourceEdgeGroup == null){
-				sourceEdgeGroup = new EdgeGroup ({
-					'node_id':req.body.source_node_id,
-					'type': req.body.type,
-					'edges': [edge]
-				})
-				sourceEdgeGroup.save()
-				console.log("New sourceEdgeGroup Created with new edge: " + sourceEdgeGroup);
-			}
-			else {
-				sourceEdgeGroup.edges.push(edge);
-				sourceEdgeGroup.save();
-				console.log('Edge added to existing sourceEdgeGroup.');
-			}
-			
-			//Add edge to target node edge group
-			EdgeGroup.findOne({'node_id':req.body.target_node_id, 'type':req.body.type}, function(err,targetEdgeGroup){
-				if (targetEdgeGroup == null){
-					targetEdgeGroup = new EdgeGroup ({
-						'node_id':req.body.target_node_id,
-						'type': req.body.type,
-						'edges': [edge]
-					})
-				targetEdgeGroup.save()
-				console.log("New targetEdgeGroup Created with new edge: " + targetEdgeGroup);
-				}
-				else {
-					targetEdgeGroup.edges.push(edge);
-					targetEdgeGroup.save();
-					console.log('Edge added to existing targetEdgeGroup.');
-				}
-			
-			res.send({msg:'Edge and EdgeGroups Created!', targetEdgeGroup: targetEdgeGroup})
-			
-			})
-		})
+
+
 	})
 }
 

@@ -77,6 +77,12 @@ exports.getConnectedNodes = function(req, res){
 	
 };
 
+exports.viewConnectedNodes = function(req, res){
+	console.log('viewConnectedNodes...')
+	console.log('req.params.id  ' + req.params.id);
+  	res.render('connected_nodes', {focus_node_id:req.params.id});
+};
+
 //  ------------------------------  EDGES  ---------------------------------------------
 
 //Display the create edge form

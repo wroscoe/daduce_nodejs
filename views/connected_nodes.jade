@@ -2,14 +2,18 @@ extends layout
 
 block content
   script(type='text/javascript', src='/javascripts/connected_nodes.js')  
-  script(type='text/javascript') 
-    get_focus_node("#{focus_node_id}"); 
+
+
       
   div.focus_node
-    Focus Node: 
+   | Focus Node: 
 
 
 
   
   div.connected_nodes
   
+  
+  script(type='text/javascript') 
+    get_focus_node("#{focus_node_id}"); 
+    get_connected_nodes("#{focus_node_id}"); 

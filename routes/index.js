@@ -1,10 +1,4 @@
 
-//node 1: 5021b5f653a727ae17000002
-//node 2: 5021b61753a727ae17000003
-//node 3: 5021b62b53a727ae17000004
-
-
-
 var ModelModule = require ('../models/edge_node')
 var Node = ModelModule.Node
 var Edge = ModelModule.Edge
@@ -69,10 +63,10 @@ exports.searchNode = function(req, res){
 exports.getConnectedNodes = function(req, res){
 	console.log('getConnectedNodes...')
 	console.log('req.params.id  ' + req.params.id);
-	Edge.find({'source_node_id':req.params.id}, function (err, e){
+	Edge.find({'A_id':req.params.id}, function (err, edges){
 	//Edge.find({}, function (err, e){
-		console.log(e)
-		res.send({msg:'Edges found.', e: e})
+		console.log(edges)
+		res.send({msg:'Edges found.', edges:edges })
 	});
 	
 };
@@ -98,19 +92,20 @@ exports.newEdge = function(req, res){
 	Edge.findOne({'source_node_id':req.body.source_node_id, 'target_node_id':req.body.target_node_id, 'type':req.body.type},function(err,edge){
 		if (edge == null){
 			forward_edge = new Edge({
-				'source_node_id':req.body.source_node_id,
-				'target_node_id':req.body.target_node_id,
+				'A_id':req.body.A_id,
+				'B_id':req.body.B_id,
 				'type': req.body.type,
-				'target_label': req.body.target_label, //the target node Label
-				'source_label': req.body.source_label,
+				'B_label': req.body.B_label, //the target node Label
+				'A_label': req.body.A_label,
 				'weight': 1,
 				'dir':1
 			})
 			forward_edge.save();
 			console.log("Forward Edge Created: " + forward_edge);
+			res.send({msg:'Edge Created'})
 		}
 		else{
-			res.send({msg:'Edge already exists'})
+			res.send({msg:'Edge already exists', body:req.body})
 		}
 
 

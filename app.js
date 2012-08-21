@@ -11,12 +11,12 @@ var express = require('express')
   , json_functions = require('./json_functions')
   , mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mydb16')
+mongoose.connect('mongodb://localhost/mydb17')
 
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 3001);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());

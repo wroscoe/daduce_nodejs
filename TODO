@@ -1,0 +1,22 @@
+TODO:
+
+Front:
+* have a backup copy of jquery for offline developing/testing
+* Finish request and display of connected nodes
+
+
+Backend:
+
+* Upload zipfile with formatted data -> upload data to daduce. 
+* Delete, Edit Nodes
+* Delete, Edit Edges
+* Merge Nodes
+* User authentication.
+
+
+OUTSOURCE:
+image resizing: python from image url
+scraping websites
+
+
+

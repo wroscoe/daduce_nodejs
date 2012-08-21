@@ -9,7 +9,6 @@ $(function() {
 
 
 function find_node(si) {
-	alert(si);
     $.getJSON('/search_node?keyword='+si , function(data) {
     	$.each(data.node, function(i, item) {
     		$('.graph').append(

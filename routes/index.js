@@ -10,12 +10,12 @@ exports.index = function(req, res){
 };
 
 //NODES
-exports.createNode = function(req, res){
+exports.view_createNode = function(req, res){
   //TODO make this an edit function if the node is specified
   res.render('create_node', {title:'Create Node'})
 };
 
-exports.newNode = function(req, res){
+exports.createNode = function(req, res){
 	//res.send(req.body)
   node = new Node({
   		'label':req.body.label, 
@@ -44,9 +44,9 @@ exports.getNode = function(req, res){
 		}
 };
 
-exports.searchNode = function(req, res){
+exports.searchNodes = function(req, res){
 	
-	console.log('searchNode req.param = ' + req.param )
+	console.log('searchNodes req.param = ' + req.param )
 	
 	if (typeof(req.param('keyword')) != 'undefined') 
 		{	// FIND edges matching node id @ ./edge?node_id=#
@@ -60,8 +60,8 @@ exports.searchNode = function(req, res){
  
 
 //Return all edge groups containing all edges for one node. 
-exports.getConnectedNodes = function(req, res){
-	console.log('getConnectedNodes...')
+exports.connectedNodes = function(req, res){
+	console.log('connectedNodes...')
 	console.log('req.params.id  ' + req.params.id);
 	Edge.find({'A_id':req.params.id}, function (err, edges){
 	//Edge.find({}, function (err, e){
@@ -80,13 +80,13 @@ exports.viewConnectedNodes = function(req, res){
 //  ------------------------------  EDGES  ---------------------------------------------
 
 //Display the create edge form
-exports.createEdge = function(req, res){
+exports.view_createEdge = function(req, res){
   //TODO make this an edit function if the node is specified
   res.render('create_edge', {title:'Create Edge'})
 };
 
 //Create a new edge, save the edge to the target and source edge groups.
-exports.newEdge = function(req, res){
+exports.createEdge = function(req, res){
 
 	//Find edge or create one. 
 	Edge.findOne({'source_node_id':req.body.source_node_id, 'target_node_id':req.body.target_node_id, 'type':req.body.type},function(err,edge){

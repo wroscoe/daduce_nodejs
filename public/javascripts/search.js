@@ -12,7 +12,7 @@ function find_node(si) {
     $.getJSON('/search_node?keyword='+si , function(data) {
     	$.each(data.node, function(i, item) {
     		$('.graph').append(
-    			'<a href="/view_connected_nodes/'+ item._id + '">'+item.label+'</a>'
+    			'<a href="/view_connectedNodes/'+ item._id + '">'+item.label+'</a>'
     			+ item.description + '</br>'
     			);
 		});

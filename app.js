@@ -43,16 +43,16 @@ mongoose.connection.on('error', function (err) {
 
 //NODES
 app.get('/node/:id?', routes.getNode);
-app.get('/create_node', routes.createNode);
-app.post('/create_node', routes.newNode);
-app.get('/search_node', routes.searchNode);
-app.get('/connected_nodes/:id?', routes.getConnectedNodes);
-app.get('/view_connected_nodes/:id?', routes.viewConnectedNodes);
+app.get('/view_createNode', routes.view_createNode);
+app.post('/createNode', routes.createNode);
+app.get('/searchNode', routes.searchNodes);
+app.get('/connectedNodes/:id?', routes.connectedNodes);
+app.get('/view_connectedNodes/:id?', routes.view_connectedNodes);
 
 //EDGES
 app.get('/edge/:id?', routes.getEdge);
-app.get('/create_edge', routes.createEdge);
-app.post('/create_edge', routes.newEdge);
+app.get('/view_createEdge', routes.view_createEdge);
+app.post('/createEdge', routes.createEdge);
 
 app.get('/', routes.index);
 

@@ -1,12 +1,14 @@
 TODO:
 
+Question:
+*
+
 Front:
 * have a backup copy of jquery for offline developing/testing
 * Finish request and display of connected nodes
 
 
 Backend:
-
 * Upload zipfile with formatted data -> upload data to daduce. 
 * Delete, Edit Nodes
 * Delete, Edit Edges

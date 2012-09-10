@@ -56,6 +56,7 @@ exports.searchNodes = function(req, res){
  			res.send({msg:'Node Found', node:node})
  			});
 		}
+	
 };
  
 

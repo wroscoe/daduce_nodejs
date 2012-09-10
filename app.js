@@ -27,6 +27,8 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
 }); 
 
+  console.log('public path' & path.join(__dirname, 'public'));
+
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
@@ -45,7 +47,7 @@ mongoose.connection.on('error', function (err) {
 app.get('/node/:id?', routes.getNode);
 app.get('/view_createNode', routes.view_createNode);
 app.post('/createNode', routes.createNode);
-app.get('/searchNode', routes.searchNodes);
+app.get('/searchNodes', routes.searchNodes);
 app.get('/connectedNodes/:id?', routes.connectedNodes);
 app.get('/view_connectedNodes/:id?', routes.view_connectedNodes);
 

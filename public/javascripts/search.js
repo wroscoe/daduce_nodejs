@@ -7,9 +7,9 @@ $(function() {
 
 });
 
-
+ 
 function find_node(si) {
-    $.getJSON('/search_node?keyword='+si , function(data) {
+    $.getJSON('/searchNodes?keyword='+si , function(data) {
     	$.each(data.node, function(i, item) {
     		$('.graph').append(
     			'<a href="/view_connectedNodes/'+ item._id + '">'+item.label+'</a>'

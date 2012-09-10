@@ -1,0 +1,226 @@
+
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>sigma.js | examples</title>
+  <meta name="description" content="">
+  <meta name="author" content="Alexis Jacomy">
+  <meta name="robots" content="all" />
+
+  <meta name="viewport" content="width=device-width">
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  <link rel="icon" type="image/png" href="favicon.ico" />
+  <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
+
+  <style type="text/css" media="all">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+  </style>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+
+</head>
+  
+  <div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand sigma-font" href="/">Daduce</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li class="active"><a href="/examples.html">Examples</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="http://github.com/jacomyal/sigma.js">Github</a></li>
+          <li><a href="http://twitter.com/sigmajs">Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+    
+  <div class="container">
+<style type="text/css">
+  div.thumbnails{
+    margin-left: 30px;
+  }
+  div.thumbnail{
+    position: relative;
+    display: inline-block;
+    margin: 6px;
+    text-align: left;
+    vertical-align: text-top;
+    width: 260px;
+  }
+  div.thumbnail:hover{
+    box-shadow: 0 0 8px #000;
+  }
+  div.thumbnail > div.caption{
+    overflow: hidden;
+  }
+  div.thumbnail > div.caption > div.bg{
+  }
+  div.thumbnail .title{
+    font-size: 13px;
+    display: inline-block;
+    padding-top: 1px;
+  }
+  div.thumbnail .title,
+  div.thumbnail .summary{
+    margin: 6px 4px;
+  }
+</style>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript">
+  // The following piece of code comes from http://css-tricks.com/examples/EqualHeightsInRows/#source-code ,
+  // much thanks to them.
+
+  // these are (ruh-roh) globals. You could wrap in an
+  // immediately-Invoked Function Expression (IIFE) if you wanted to...
+  var currentTallest = 0,
+  currentRowStart = 0,
+  rowDivs = new Array();
+
+  function setConformingHeight(el, newHeight) {
+    // set the height to something new, but remember the original height in case things change
+    el.data("originalHeight", (el.data("originalHeight") == undefined) ? (el.height()) : (el.data("originalHeight")));
+    el.height(newHeight);
+  }
+
+  function getOriginalHeight(el) {
+    // if the height has changed, send the originalHeight
+    return (el.data("originalHeight") == undefined) ? (el.height()) : (el.data("originalHeight"));
+  }
+
+  function columnConform() {
+    // find the tallest DIV in the row, and set the heights of all of the DIVs to match it.
+    $('div.thumbnails > div.thumbnail').each(function() {
+      // "caching"
+      var $el = $(this);
+      var topPosition = $el.position().top;
+
+      if (currentRowStart != topPosition) {
+        // we just came to a new row.  Set all the heights on the completed row
+        for(currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+          setConformingHeight(rowDivs[currentDiv], currentTallest);
+        }
+
+        // set the variables for the new row
+        rowDivs.length = 0; // empty the array
+        currentRowStart = topPosition;
+        currentTallest = getOriginalHeight($el);
+        rowDivs.push($el);
+      } else {
+        // another div on the current row.  Add it to the list and check if it's taller
+        rowDivs.push($el);
+        currentTallest = (currentTallest < getOriginalHeight($el)) ? (getOriginalHeight($el)) : (currentTallest);
+      }
+      // do the last row
+      for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+        setConformingHeight(rowDivs[currentDiv], currentTallest);
+      }
+    });
+  }
+
+  $(window).resize(columnConform).load(columnConform);
+</script>
+
+<div class="row">
+  <h2 class="span12">Examples</h2>
+  <div class="span12">
+    <p>Here is a list of different examples of how to use <span class="sigma-font">sigma.js</span>.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="span12 thumbnails">
+    
+      <div class="thumbnail">
+        <a href="/examples/gexf_example.html"><img src="thumbnails/gexf_example.png" alt=""></a>
+        <div class="caption">
+          <div class="bg"></div>
+          <a href="/examples/gexf_example.html" class="title">Load and display a GEXF encoded graph</a>
+          <p class="summary">An example showing how to use the <b>sigma.parseGexf.js</b> plugin.</p>
+        </div>
+      </div>
+    
+      <div class="thumbnail">
+        <a href="/examples/random_clusters.html"><img src="thumbnails/random_clusters.png" alt=""></a>
+        <div class="caption">
+          <div class="bg"></div>
+          <a href="/examples/random_clusters.html" class="title">ForceAtlas2 on a random graph</a>
+          <p class="summary">An example showing how to use the <b>sigma.forceatlas2.js</b> plugin, on a random graph.</p>
+        </div>
+      </div>
+    
+      <div class="thumbnail">
+        <a href="/examples/parse_data.html"><img src="thumbnails/parse_data.png" alt=""></a>
+        <div class="caption">
+          <div class="bg"></div>
+          <a href="/examples/parse_data.html" class="title">Parse graph data / use custom events</a>
+          <p class="summary">An example showing how to parse the graph data dynamically.</p>
+        </div>
+      </div>
+    
+      <div class="thumbnail">
+        <a href="/examples/hidden_nodes.html"><img src="thumbnails/hidden_nodes.png" alt=""></a>
+        <div class="caption">
+          <div class="bg"></div>
+          <a href="/examples/hidden_nodes.html" class="title">Hide nodes</a>
+          <p class="summary">An example showing how use the node <em>hidden</em> property.</p>
+        </div>
+      </div>
+    
+      <div class="thumbnail">
+        <a href="/examples/a_plugin_example.html"><img src="thumbnails/a_plugin_example.png" alt=""></a>
+        <div class="caption">
+          <div class="bg"></div>
+          <a href="/examples/a_plugin_example.html" class="title">How to write a plugin (basics)</a>
+          <p class="summary">An example showing how to write a basic layout plugin for <span class="sigma-font">sigma.js</span>.</p>
+        </div>
+      </div>
+    
+      <div class="thumbnail">
+        <a href="/examples/a_plugin_example_advanced.html"><img src="thumbnails/a_plugin_example_advanced.png" alt=""></a>
+        <div class="caption">
+          <div class="bg"></div>
+          <a href="/examples/a_plugin_example_advanced.html" class="title">How to write a plugin (advanced)</a>
+          <p class="summary">An example showing how to write a FishEye plugin for <span class="sigma-font">sigma.js</span>.</p>
+        </div>
+      </div>
+    
+      <div class="thumbnail">
+        <a href="/examples/more_node_info.html"><img src="thumbnails/more_node_info.png" alt=""></a>
+        <div class="caption">
+          <div class="bg"></div>
+          <a href="/examples/more_node_info.html" class="title">Accessing node attributes</a>
+          <p class="summary">An example showing how to parse nodes attributes.</p>
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+
+    <hr>
+
+<footer class="footer">
+  <p class="pull-right"><a href="#">&#8593; Back to top</a></p>
+  <p>© Alexis Jacomy 2012</p>
+  <p>
+    <span class="sigma-font">sigma.js</span> and this website are distributed under the <a href="/LICENSE.txt" target="_blank">MIT License</a>.
+  </p>
+  <p>
+    You can also take a look at 
+    my <span><a href="http://ofnodesandedges.com" title="ofnodesandedges.com">blog</a></span>, 
+    my <span><a href="http://github.com/jacomyal" title="github.com/jacomyal">github repositories</a></span>, 
+    or my <span><a href="http://twitter.com/jacomyal" title="twitter.com/jacomyal">twitter account</a></span>.
+  </p>
+</footer>
+  </div>
+</body>
+</html>

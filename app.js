@@ -5,18 +5,21 @@
  
 var express = require('express')
   , routes = require('./routes')
+  , config = require('./config')
   , http = require('http')
   , path = require('path')
   , format = require('util').format
-  , json_functions = require('./json_functions')
+  //, json_functions = require('./json_functions')
   , mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mydb17')
+conf = new config();
+
+mongoose.connect(conf.db_path)
 
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3001);
+  app.set('port', process.env.PORT || conf.port);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -24,7 +27,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(conf.static_path));
 }); 
 
   console.log('public path' & path.join(__dirname, 'public'));

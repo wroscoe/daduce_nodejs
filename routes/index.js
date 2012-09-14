@@ -67,7 +67,7 @@ exports.connectedNodes = function(req, res){
 	Edge.find({'A_id':req.params.id}, function (err, edges){
 	//Edge.find({}, function (err, e){
 		console.log(edges)
-		res.send({msg:'Edges found.', edges:edges })
+		res.send({msg:'Edges fouededges '})
 	});
 	
 };

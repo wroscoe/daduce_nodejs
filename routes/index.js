@@ -4,6 +4,21 @@ var Config = require ('../config')
 var Node = ModelModule.Node
 var Edge = ModelModule.Edge
 
+var util = require('util')
+var exec = require('child_process').exec;
+
+exports.git_update_static = function(req, res){
+	function puts(error, stdout, stderr) { 
+		res.send(util.puts(stdout)); 
+	};
+	
+	//exec("ls",puts);
+	exec("rm -R ~/daduce_static", puts);
+	exec("mkdir ~/daduce_static", puts);
+	exec("git clone git@github.com:wroscoe/daduce_static.git ~/daduce_static", puts);
+
+}
+
 conf = new Config()
 
 //INDEX
@@ -54,6 +69,8 @@ exports.getNode = function(req, res){
 
 exports.searchNodes = function(req, res){
 	console.log('searchNodes req.param = ' + req.param )
+	
+	if (typeof(req.param('p')) == 'undefined') { var p = 0};
 	
 	if (typeof(req.param('keyword')) != 'undefined') 
 		{	// FIND edges matching node id @ ./edge?node_id=#

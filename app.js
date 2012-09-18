@@ -44,6 +44,9 @@ mongoose.connection.on('error', function (err) {
   console.log(err);
 });
 
+//ADMIN
+app.get('/git_update_static', routes.git_update_static);
+
 //NODES
 app.get('/node/:id?', routes.getNode);
 app.get('/createNode', routes.view_createNode);

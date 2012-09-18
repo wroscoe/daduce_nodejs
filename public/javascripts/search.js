@@ -9,6 +9,9 @@ $(function() {
 
  
 function find_node(si) {
+	//TODO
+	//1. Pagenate results
+	//2. Replace / clear previous results.
     $.getJSON('/searchNodes?keyword='+si , function(data) {
     	$.each(data.node, function(i, item) {
     		$('.graph').append(

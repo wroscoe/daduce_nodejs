@@ -1,13 +1,21 @@
 
 var ModelModule = require ('../models/edge_node')
+var Config = require ('../config')
 var Node = ModelModule.Node
 var Edge = ModelModule.Edge
 
+conf = new Config()
 
 //INDEX
 exports.index = function(req, res){
-  res.render('index', { title: 'Express', var2:'34'});
+    var path = 'index.html';
+    console.log("path used for sendFile" & path);
+    res.sendfile(conf.static_path , "index.html")
 };
+
+exports.dev =function(req,res){
+	res.render('index', { title: 'Express', var2:'34'});
+}
 
 //NODES
 exports.view_createNode = function(req, res){
@@ -45,7 +53,6 @@ exports.getNode = function(req, res){
 };
 
 exports.searchNodes = function(req, res){
-	
 	console.log('searchNodes req.param = ' + req.param )
 	
 	if (typeof(req.param('keyword')) != 'undefined') 
@@ -56,7 +63,6 @@ exports.searchNodes = function(req, res){
  			res.send({msg:'Node Found', node:node})
  			});
 		}
-	
 };
  
 
@@ -76,6 +82,17 @@ exports.viewConnectedNodes = function(req, res){
 	console.log('viewConnectedNodes...')
 	console.log('req.params.id  ' + req.params.id);
   	res.render('connected_nodes', {focus_node_id:req.params.id});
+};
+
+//TODO: Check if this works
+exports.countNodes = function(req, res){
+	console.log('countNodes: counting....' )
+	
+	var patt=new RegExp(req.param('keyword'), "i");
+	Node.count({'label': patt}, function(err, count) {
+		res.send({msg:'Nodes Counted', count:count})
+	});
+
 };
 
 //  ------------------------------  EDGES  ---------------------------------------------

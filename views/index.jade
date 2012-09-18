@@ -4,20 +4,46 @@ extends layout
 
 block content
   script(type='text/javascript', src='/javascripts/search.js')   
-  h1= title
-  p Leading Inovation
-
-  p
-    | Links to test the site.
+  h1 Daduce API
+  p Below you'll find all the availible calls you can make to daduce to access nodes(things) and their edges(connections).
+    
+  h2 Read Data (GET)
+  h3 Nodes
+  ul
+    li
+      | Get node by ID: 
+      a(href="./node") /nodes:_nodeID_
+    li
+      | Search nodes matching keyword:  
+      a(href="./searchNodes?keyword=Mac") /searchNodes?keyword=Mac
+    li
+      | Count Nodes: 
+      a(href="./countNodes") /countNodes
+  
+  h3 Edges
+  ul
+    li
+      | Get get connected nodes: 
+      a(href="./connectedNodes/_nodeID_") /connectedNodes/_nodeID_  
+    li
+      | Count Edges: 
+      a(href="./countEdges") /countEdges
+  
+  
+  h2 Input (POST)
   ul
     li 
-      a(href="/create_node") Create a Node
+      | Create a Node: 
+      a(href="./view_createNode") /view_createNode (form to submit)
     li
-      a(href="/nodes") See some Nodes
+      | Create an Edge: 
+      a(href="./view_createEdge") /view_createEdge (form to submit)
       
 
+  h2 Examples
+
   div.search
-    Search Nodes: 
+    h3 Search
     input(name='search', id='search_input')
     button(id='search_button') A button element
 

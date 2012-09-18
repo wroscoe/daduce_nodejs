@@ -30,10 +30,8 @@ app.configure(function(){
   app.use(express.static(conf.static_path));
 }); 
 
-  console.log('public path' & path.join(__dirname, 'public'));
-
 app.configure('development', function(){
-  app.use(express.errorHandler());
+	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 //TEST if the MONGO server is working
@@ -48,11 +46,12 @@ mongoose.connection.on('error', function (err) {
 
 //NODES
 app.get('/node/:id?', routes.getNode);
-app.get('/view_createNode', routes.view_createNode);
+app.get('/createNode', routes.view_createNode);
 app.post('/createNode', routes.createNode);
 app.get('/searchNodes', routes.searchNodes);
 app.get('/connectedNodes/:id?', routes.connectedNodes);
 app.get('/view_connectedNodes/:id?', routes.view_connectedNodes);
+app.get('/countNodes', routes.countNodes);
 
 //EDGES
 app.get('/edge/:id?', routes.getEdge);
@@ -60,6 +59,7 @@ app.get('/view_createEdge', routes.view_createEdge);
 app.post('/createEdge', routes.createEdge);
 
 app.get('/', routes.index);
+app.get('/dev', routes.dev);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

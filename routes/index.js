@@ -59,7 +59,7 @@ exports.searchNodes = function(req, res){
 		{	// FIND edges matching node id @ ./edge?node_id=#
 			
 			var patt=new RegExp(req.param('keyword'), "i");
- 			Node.find({'label': patt}, function(err, node) {
+ 			Node.find({'label': patt}).skip(0).limit(20).execFind(function(err, node) {
  			res.send({msg:'Node Found', node:node})
  			});
 		}

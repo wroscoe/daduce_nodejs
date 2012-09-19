@@ -15,7 +15,7 @@ module.exports = function(){
         case 'wroscoe':
         	console.log("Reading wroscoe config setting")
             return {static_path:"/home/wroscoe/daduce_static",
-            		db_path:"mongodb://localhost/prod_db",
+            		db_path:"mongodb://localhost/dev_db",
             		port:8080};
         
         default:

@@ -33,12 +33,12 @@ exports.dev =function(req,res){
 }
 
 //NODES
-exports.view_createNode = function(req, res){
+exports.createNode = function(req, res){
   //TODO make this an edit function if the node is specified
   res.render('create_node', {title:'Create Node'})
 };
 
-exports.createNode = function(req, res){
+exports.post_createNode = function(req, res){
 	//res.send(req.body)
   node = new Node({
   		'label':req.body.label, 
@@ -70,13 +70,16 @@ exports.getNode = function(req, res){
 exports.searchNodes = function(req, res){
 	console.log('searchNodes req.param = ' + req.param )
 	
-	if (typeof(req.param('p')) == 'undefined') { var p = 0};
+	if (typeof(req.param('p')) == 'undefined') 
+		{ var p = 0}
+	else
+		{ var p = req.param('p')};
 	
 	if (typeof(req.param('keyword')) != 'undefined') 
 		{	// FIND edges matching node id @ ./edge?node_id=#
 			
 			var patt=new RegExp(req.param('keyword'), "i");
- 			Node.find({'label': patt}).skip(0).limit(20).execFind(function(err, node) {
+ 			Node.find({'label': patt}).skip(p).limit(p+20).execFind(function(err, node) {
  			res.send({msg:'Node Found', node:node})
  			});
 		}
@@ -95,13 +98,12 @@ exports.connectedNodes = function(req, res){
 	
 };
 
-exports.viewConnectedNodes = function(req, res){
+exports.view_connectedNodes = function(req, res){
 	console.log('viewConnectedNodes...')
 	console.log('req.params.id  ' + req.params.id);
   	res.render('connected_nodes', {focus_node_id:req.params.id});
 };
 
-//TODO: Check if this works
 exports.countNodes = function(req, res){
 	console.log('countNodes: counting....' )
 	
@@ -115,13 +117,13 @@ exports.countNodes = function(req, res){
 //  ------------------------------  EDGES  ---------------------------------------------
 
 //Display the create edge form
-exports.view_createEdge = function(req, res){
+exports.createEdge = function(req, res){
   //TODO make this an edit function if the node is specified
   res.render('create_edge', {title:'Create Edge'})
 };
 
 //Create a new edge, save the edge to the target and source edge groups.
-exports.createEdge = function(req, res){
+exports.post_createEdge = function(req, res){
 
 	//Find edge or create one. 
 	Edge.findOne({'source_node_id':req.body.source_node_id, 'target_node_id':req.body.target_node_id, 'type':req.body.type},function(err,edge){
@@ -147,5 +149,13 @@ exports.createEdge = function(req, res){
 	})
 }
 
+exports.countEdges = function(req, res){
+	console.log('countEdges: counting....' )
+	
+	var patt=new RegExp(req.param('keyword'), "i");
+	Edge.count({'label': patt}, function(err, count) {
+		res.send({msg:'Edges Counted', count:count})
+	});
 
+};
 

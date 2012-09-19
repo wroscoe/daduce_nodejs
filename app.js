@@ -43,14 +43,17 @@ mongoose.connection.on('error', function (err) {
   console.log('Could not connect to mongo server!');
   console.log(err);
 });
+//HOME
+app.get('/', routes.index);
+app.get('/dev', routes.dev);
 
 //ADMIN
 app.get('/git_update_static', routes.git_update_static);
 
 //NODES
 app.get('/node/:id?', routes.getNode);
-app.get('/createNode', routes.view_createNode);
-app.post('/createNode', routes.createNode);
+app.get('/createNode', routes.createNode);
+app.post('/createNode', routes.post_createNode);
 app.get('/searchNodes', routes.searchNodes);
 app.get('/connectedNodes/:id?', routes.connectedNodes);
 app.get('/view_connectedNodes/:id?', routes.view_connectedNodes);
@@ -58,11 +61,9 @@ app.get('/countNodes', routes.countNodes);
 
 //EDGES
 app.get('/edge/:id?', routes.getEdge);
-app.get('/view_createEdge', routes.view_createEdge);
-app.post('/createEdge', routes.createEdge);
-
-app.get('/', routes.index);
-app.get('/dev', routes.dev);
+app.get('/createEdge', routes.createEdge);
+app.post('/createEdge', routes.post_createEdge);
+app.get('/countEdges', routes.countEdges);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

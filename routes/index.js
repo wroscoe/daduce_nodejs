@@ -46,7 +46,7 @@ exports.post_createNode = function(req, res){
   		'image_url':req.body.image_url
   	});
   node.save()
-
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.send({msg:'Node Created!', node: [node]}) //Does not render as JSON in chrome?
   };
 
@@ -55,6 +55,7 @@ exports.getNode = function(req, res){
 		{	// FIND one node @ ./node/id
 			Node.find({_id:req.params.id}, function(err, node) {
 				console.log('nodeid' + req.params.id)
+				res.setHeader("Access-Control-Allow-Origin", "*");
 				res.send({msg:'Node Found', node:node});
 			});
 		}
@@ -62,6 +63,7 @@ exports.getNode = function(req, res){
 		{	//FIND ALL NODES @ ./node
 			  	Node.find({}, function(err, node) {
 					console.log('nodeid' + req.params.id)
+					res.setHeader("Access-Control-Allow-Origin", "*");
 					res.send({msg:'Node Found', node:node});
 			});
 		}
@@ -80,6 +82,7 @@ exports.searchNodes = function(req, res){
 			
 			var patt=new RegExp(req.param('keyword'), "i");
  			Node.find({'label': patt}).skip(p).limit(p+20).execFind(function(err, node) {
+ 			res.setHeader("Access-Control-Allow-Origin", "*");
  			res.send({msg:'Node Found', node:node})
  			});
 		}
@@ -93,6 +96,7 @@ exports.connectedNodes = function(req, res){
 	Edge.find({'A_id':req.params.id}, function (err, edges){
 	//Edge.find({}, function (err, e){
 		console.log(edges)
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.send({msg:'Edges fouededges '})
 	});
 	
@@ -109,6 +113,7 @@ exports.countNodes = function(req, res){
 	
 	var patt=new RegExp(req.param('keyword'), "i");
 	Node.count({'label': patt}, function(err, count) {
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.send({msg:'Nodes Counted', count:count})
 	});
 
@@ -142,6 +147,7 @@ exports.post_createEdge = function(req, res){
 			res.send({msg:'Edge Created'})
 		}
 		else{
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send({msg:'Edge already exists', body:req.body})
 		}
 
@@ -154,6 +160,7 @@ exports.countEdges = function(req, res){
 	
 	var patt=new RegExp(req.param('keyword'), "i");
 	Edge.count({'label': patt}, function(err, count) {
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.send({msg:'Edges Counted', count:count})
 	});
 

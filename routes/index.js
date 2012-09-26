@@ -47,16 +47,16 @@ exports.post_createNode = function(req, res){
   	});
   node.save()
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.send({msg:'Node Created!', node: [node]}) //Does not render as JSON in chrome?
+  res.send({node: node}) //Does not render as JSON in chrome?
   };
 
 exports.getNode = function(req, res){
 	if (typeof(req.params.id) != 'undefined') 
 		{	// FIND one node @ ./node/id
-			Node.find({_id:req.params.id}, function(err, node) {
+			Node.findOne({_id:req.params.id}, function(err, node) {
 				console.log('nodeid' + req.params.id)
 				res.setHeader("Access-Control-Allow-Origin", "*");
-				res.send({msg:'Node Found', node:node});
+				res.send(node);
 			});
 		}
 	else
@@ -64,7 +64,7 @@ exports.getNode = function(req, res){
 			  	Node.find({}, function(err, node) {
 					console.log('nodeid' + req.params.id)
 					res.setHeader("Access-Control-Allow-Origin", "*");
-					res.send({msg:'Node Found', node:node});
+					res.send({node:node});
 			});
 		}
 };
@@ -81,9 +81,9 @@ exports.searchNodes = function(req, res){
 		{	// FIND edges matching node id @ ./edge?node_id=#
 			
 			var patt=new RegExp(req.param('keyword'), "i");
- 			Node.find({'label': patt}).skip(p).limit(p+20).execFind(function(err, node) {
+ 			Node.find({'label': patt}).skip(p).limit(p+20).execFind(function(err, nodes) {
  			res.setHeader("Access-Control-Allow-Origin", "*");
- 			res.send({msg:'Node Found', node:node})
+ 			res.send({nodes:nodes})
  			});
 		}
 };
@@ -97,7 +97,7 @@ exports.connectedNodes = function(req, res){
 	//Edge.find({}, function (err, e){
 		console.log(edges)
 		res.setHeader("Access-Control-Allow-Origin", "*");
-		res.send({msg:'Edges fouededges '})
+		res.send({edges:edges})
 	});
 	
 };

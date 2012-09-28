@@ -43,6 +43,8 @@ mongoose.connection.on('error', function (err) {
   console.log('Could not connect to mongo server!');
   console.log(err);
 });
+
+
 //HOME
 app.get('/', routes.index);
 app.get('/dev', routes.dev);
@@ -52,8 +54,10 @@ app.get('/git_update_static', routes.git_update_static);
 
 //NODES
 app.get('/node/:id?', routes.getNode);
-app.get('/createNode', routes.createNode);
-app.post('/createNode', routes.post_createNode);
+app.post('/node', routes.postNode);
+
+app.get('/createNode', routes.renderCreateNode);
+
 app.get('/searchNodes', routes.searchNodes);
 app.get('/connectedNodes/:id?', routes.connectedNodes);
 app.get('/view_connectedNodes/:id?', routes.view_connectedNodes);

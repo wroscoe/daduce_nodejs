@@ -32,13 +32,15 @@ exports.dev =function(req,res){
 	res.render('index', { title: 'Express', var2:'34'});
 }
 
+
+
 //NODES
-exports.createNode = function(req, res){
+exports.renderCreateNode = function(req, res){
   //TODO make this an edit function if the node is specified
   res.render('create_node', {title:'Create Node'})
 };
 
-exports.post_createNode = function(req, res){
+exports.postNode = function(req, res){
 	//res.send(req.body)
   node = new Node({
   		'label':req.body.label, 
@@ -47,7 +49,7 @@ exports.post_createNode = function(req, res){
   	});
   node.save()
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.send({node: node}) //Does not render as JSON in chrome?
+  res.send(node) //Does not render as JSON in chrome?
   };
 
 exports.getNode = function(req, res){
@@ -60,12 +62,10 @@ exports.getNode = function(req, res){
 			});
 		}
 	else
-		{	//FIND ALL NODES @ ./node
-			  	Node.find({}, function(err, node) {
-					console.log('nodeid' + req.params.id)
-					res.setHeader("Access-Control-Allow-Origin", "*");
-					res.send({node:node});
-			});
+		{	//ERROR: No node id was given.
+			res.setHeader("Access-Control-Allow-Origin", "*");
+			res.send({error:"No node id submitted"});
+			console.log({error:"No node id submitted"})
 		}
 };
 
